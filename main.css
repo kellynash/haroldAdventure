@@ -1,29 +1,32 @@
 .cell {
-	height: 100px;
-	width: 100px;
+	height: 50px;
+	width: 50px;
 	color: purple;
 	border-style: solid;
 	border-color: purple;
 	overflow: hidden;
-	align-content: center;
 }
 .ttt-grid {
-	left: auto
-	right: auto;
+  margin: auto; 
 }
-#up {
-	position: relative;
-	top: 0;
+.outer {
+  position: relative;
 }
-#down {
-    position: relative;
-    bottom: 0;
+img {
+  height: auto; 
+  width: auto; 
+  max-width: 50px; 
+  max-height: 50px;
+  margin-left: auto;
+  margin-right: auto;
 }
-#left {
-    position: relative;
-    left: 0;
+.dpad {
+	margin-left: auto;
+	margin-right: auto;
 }
-#right {
-    position: relative;
-    left: 0;
+.btn {
+  margin: 10px;
+  height: 35px;
+  width: 50px;
+  padding: 0px;
 }

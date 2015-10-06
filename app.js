@@ -1,155 +1,91 @@
-var yCoord = 0;
-var xCoord = 0;
+var adventureSize = Math.floor(3 + Math.random()*8);
+var myAdventure = new Adventure(0, 0, adventureSize-1, adventureSize-1, adventureSize);
 
-// Initializing the corrdinates of the target cell 
-var endX = 2;
-var endY = 2;
+var getID = function() {
+    return myAdventure.yCoord.toString() + myAdventure.xCoord.toString();
+};
+
+var getIDTarget = function() {
+    return myAdventure.endY.toString() + myAdventure.endX.toString();
+};
 
 //Adding a function to replace the winning cell with a picture of dead Abe Simpson
 var killAbe = function () {
-	document.getElementById(endY.toString() + endX.toString()).innerHTML = "<img src=\"dead.jpg\"></img>";
+    document.getElementById(getID()).innerHTML = "<img src=\"img/dead.jpg\"></img>";
+    myAdventure.isGhost = true;
 };
 
-//Adding a function to place an image at the target cell
 var target = function(){
-	document.getElementById(endY.toString() + endX.toString()).innerHTML = "<img src=\"retire.png\"></img>";
+    var imageElement = "<img class=\"img-responsive center-block\" src=\"img/retire.png\"></img>";
+    document.getElementById(getIDTarget()).innerHTML = imageElement;
 };
     
 var movAbe = function(){
-	document.getElementById(yCoord.toString() + xCoord.toString()).innerHTML = "<img src=\"small_abe.png\"></img>";
+    if (myAdventure.isGhost) {
+        imageElement = "<img src=\"img/ghost.png\"></img>";
+    } else {
+        imageElement = "<img class=\"img-responsive center-block\" src=\"img/small_abe.png\"></img>";
+    }
+    document.getElementById(getID()).innerHTML = imageElement;
 };
 
-//refactoring hideAbe
-
-var hideAbe = function (xChange, yChange) {
-	document.getElementById((yCoord + yChange).toString() + (xCoord + xChange).toString()).innerHTML = "";
-}
-
-var holdon = new Audio('holdon.wav');
-var coon = new Audio('racoon.wav');
-var dead = new Audio('dead.wav')
-
-
-movAbe();
-target();
-
-function mov(xDel, yDel, x, y, bound) {
-	
-	if(xCoord === (endX + xDel) && yCoord === (endY + yDel)) {
-        xCoord += x;
-        yCoord += y;
-        hideAbe(xDel, yDel);	
-        killAbe();
-        dead.play();
-        alert("Whuuthaa!!??");
-	}
-	else if (yCoord === bound && yDel != 0) {
-        holdon.play();
-        alert("D'oh!!!");
-    }
-    else if (xCoord === bound && xDel != 0) {
-        coon.play();
-        alert("D'oh!!!");
-    }
-        else {
-        xCoord += x;
-        yCoord += y;
-		hideAbe(xDel, yDel);
-		movAbe();
-	};
-}
-
-function movDown() {
-	mov(0, -1, 0, 1, 2);
-}; 
-function movUp() {
-	mov(0, 1, 0, -1, 0);
-}; 
-function movLeft() {
-	mov(1, 0, -1, 0, 0);
-}; 
-function movRight() {
-	mov(-1, 0, 1, 0, 2);
+var hideAbe = function () {
+    document.getElementById(getID()).innerHTML = "";
 };
 
-function reset() {
-    hideAbe(0,0);
-    xCoord = 0;
-    yCoord = 0;
+var movDown = function() {
+    myAdventure.mov(0, 1);
+};
+
+var movUp = function() {
+    myAdventure.mov(0, -1);
+};
+
+var movLeft = function() {
+    myAdventure.mov(-1, 0);
+};
+
+var movRight = function() {
+    myAdventure.mov(1, 0);
+};
+
+var reset = function() {
+    myAdventure.reset();
     movAbe();
     target();
-}
-//function movDown() {
-//	
-//	
-//	if(xCoord === endX && yCoord === (endY -1)) {
-//        yCoord++;
-//        hideAbe(0, -1);	
-//        killAbe();
-//        alert("Whuuthaa!!??");
-//	}
-//	else if (yCoord === 2) {
-//        alert("D'oh!!!");
-//    }
-//        else {
-//        yCoord++;
-//		hideAbe(0, -1);
-//		movAbe();
-//	};
-//}
-//
-//function movUp() {
-//	
-//	if(xCoord === endX && yCoord === (endY +1)) {
-//        yCoord--;
-//        hideAbe(0,1);
-//        killAbe();
-//	   alert("WhuuThe!!??");
-//    }
-//	else if (yCoord === 0){
-//		alert("D'oh!!!");
-//	}
-//	else {
-//		yCoord--;
-//		hideAbe(0, 1);
-//		movAbe();
-//	};
-//}
-//
-//function movLeft() {
-//	
-//	if(xCoord === (endX + 1) && yCoord === endY) {
-//       xCoord--;
-//       hideAbe(1,0);
-//       killAbe();
-//	   alert("WhuuThe!!??");
-//    }
-//	else if (xCoord === 0){
-//		alert("D'oh!!!");
-//	}
-//	else {
-//		xCoord--;
-//		hideAbe(1,0);
-//		movAbe();
-//	};
-//}
-//
-//function movRight() {
-//	
-//	if(xCoord === (endX - 1) && yCoord === endY) {
-//        xCoord++;
-//        hideAbe(-1,0);
-//        killAbe();
-//	   alert("WhuuThe!!??");
-//    }
-//	else if (xCoord === 2){
-//		alert("Don't have cow, man!");
-//	}
-//	else {
-//		xCoord++;
-//        hideAbe(-1,0);
-//		movAbe();
-//	};
-//}
+};
 
+var generateGrid = function() {
+    for (var row = 0; row < myAdventure.bound; row++) {
+        document.write("<tr class=\"row\">\n");
+
+        for (var col = 0; col < myAdventure.bound; col++) {
+            document.write("  <td id=\"" + row + col + 
+                "\" class=\"cell\"></td>\n");
+        }
+        document.write("</tr>");
+    }
+    reset();
+};
+
+
+document.onkeydown = function(e) {
+    switch (e.keyCode) {
+        case 37:
+            movLeft();
+            break;
+        case 38:
+            movUp();
+            break;
+        case 39:
+            movRight();
+            break;
+        case 40:
+            movDown();
+            break;
+        case 32:
+            reset();
+            break;
+   }
+};
 

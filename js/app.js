@@ -26,22 +26,22 @@ var reset = function() {
     myAdventure.reset();
 }
 
-    document.onkeydown = function(e) {
-        switch (e.keyCode) {
-            case 37:
-                movLeft();
-                break;
-            case 38:
-                movUp();
-                break;
-            case 39:
-                movRight();
-                break;
-            case 40:
-                movDown();
-                break;
-            case 32:
-                reset();
-                break;
-        }
-    };
+document.onkeydown = function(e) {
+    switch (e.keyCode) {
+        case 37:
+            movLeft();
+            break;
+        case 38:
+            movUp();
+            break;
+        case 39:
+            movRight();
+            break;
+        case 40:
+            movDown();
+            break;
+        case 32:
+            reset();
+            break;
+    }
+};

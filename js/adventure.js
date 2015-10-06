@@ -56,13 +56,15 @@ Adventure.prototype.getID = function() {
     return this.coord.x.toString() + this.coord.y.toString();
 };
 
-Adventure.prototype.getIDTarget = function() {
+Adventure.prototype.getIDEnd = function() {
     return this.end.x.toString() + this.end.y.toString();
 };
 
 Adventure.prototype.getIDBurns = function() {
     return this.burns.x.toString() + this.burns.y.toString();
 };
+
+
 
 //Adding a function to replace the winning cell with a picture of dead Abe Simpson
 Adventure.prototype.killAbe = function () {
@@ -75,9 +77,9 @@ Adventure.prototype.placeBurns = function() {
     document.getElementById(this.getIDBurns()).innerHTML = imageElement;
 };
 
-Adventure.prototype.target = function() {
+Adventure.prototype.placeEnd = function() {
     var imageElement = this.makeImageElement("retire.png");
-    document.getElementById(this.getIDTarget()).innerHTML = imageElement;
+    document.getElementById(this.getIDEnd()).innerHTML = imageElement;
 };
     
 Adventure.prototype.movAbe = function() {
@@ -117,7 +119,7 @@ Adventure.prototype.reset = function() {
     this.coord.y = this.start.y;
     this.isGhost = false;
     this.movAbe();
-    this.target();
+    this.placeEnd();
     this.placeBurns();
 }
 

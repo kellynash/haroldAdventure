@@ -17,7 +17,7 @@ var movRight = function() {
 };
 
 var setup = function() {
-    var adventureSize = Math.floor(3 + Math.random()*8);
+    var adventureSize = Math.floor(5 + Math.random()*8);
     myAdventure = new Adventure(0, 0, adventureSize-1, adventureSize-1, adventureSize);
     myAdventure.generateGrid();
 };
